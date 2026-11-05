@@ -1,0 +1,13 @@
+{
+  "name": "studio-recall",
+  "version": "0.1.0",
+  "description": "Analog studio recall: per-channel EQ/level readings via Dirac impulse",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "naudiodon2": "^2.5.0"
+  }
+}

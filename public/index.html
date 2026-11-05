@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Studio Recall</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<aside>
+  <div class="box">
+    <label>Session</label>
+    <select id="sessionSel"></select>
+    <button id="newSession">New session</button>
+    <button id="renameSession">Rename session</button>
+  </div>
+  <div class="box grow">
+    <label>Channels / tests</label>
+    <ul id="testList"></ul>
+    <button id="addTest">+ Add EQ Test</button>
+    <button id="addComp">+ Add Compression Test</button>
+  </div>
+</aside>
+<main>
+  <div id="empty">Add a test on the left to begin.</div>
+  <div id="panel" hidden>
+    <div class="row">
+      <input id="testName" placeholder="Name (e.g. Neve 1073 ch3)">
+      <span class="tag" id="testType">EQ analyser</span>
+      <button id="cloneTest">Clone</button>
+      <button id="delTest" class="danger">Delete</button>
+    </div>
+    <div class="row">
+      <label>Interface <select id="dev"></select></label>
+      <label>In ch <select id="inCh"></select></label>
+      <label>Out ch <select id="outCh"></select></label>
+    </div>
+    <div class="row">
+      <button id="runBtn" class="primary">Start</button>
+      <span id="variantBox" class="hide">
+        <button id="varA" class="toggle">A: Transfer curve</button><button id="varB" class="toggle">B: Attack / release</button>
+      </span>
+      <label class="eq-only">Impulse level <input id="level" type="range" min="-40" max="0" value="-12" step="1"> <span id="levelV">-12 dB</span></label>
+      <label class="eq-only">Smoothing <select id="smooth"><option value="3">1/3 oct</option><option value="6" selected>1/6 oct</option><option value="12">1/12 oct</option><option value="24">1/24 oct</option></select></label>
+      <label class="eq-only">Averaging <select id="avg"><option value="0.5" selected>Fast</option><option value="0.25">Medium</option><option value="0.1">Slow</option></select></label>
+    </div>
+    <div class="row">
+      <button id="capture" class="primary">Capture reading</button>
+      <button id="clear" class="danger">Clear reading</button>
+      <span id="status"></span>
+      <progress id="progress" class="hide" max="1" value="0"></progress>
+    </div>
+    <canvas id="plot" width="1100" height="520"></canvas>
+    <div class="legend"><span class="live">■ Live</span> <span class="saved">■ Saved reading</span> <span id="readingInfo"></span> <span id="zoomHint" class="hide">· Scroll to zoom time, Option+scroll to zoom level, drag to pan, double-click to reset</span></div>
+    <label class="notes">Notes <textarea id="notes" rows="4" placeholder=""></textarea></label>
+  </div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

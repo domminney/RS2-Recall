@@ -4,18 +4,26 @@ Studio Recall is a local Node.js web app for measuring and saving audio hardware
 recall data. It can run EQ transfer-curve tests and compressor tests through a
 multi-channel audio interface, then save the readings as JSON sessions.
 
-The app is intended to run locally on macOS with the audio interface connected
-to the computer. It does not send audio through the browser; the Node.js server
-handles the audio input and output.
+The app is intended to run locally with the audio interface connected to the
+computer. It does not send audio through the browser; the Node.js server handles
+the audio input and output.
+
+## Platform support
+
+The audio layer uses PortAudio through `naudiodon2`, so it is designed to work
+on macOS, Windows, and Linux. macOS is the original development environment;
+Windows should work, but the native audio dependency must compile successfully
+on the target PC and the audio interface driver must expose both input and
+output channels.
 
 ## Requirements
 
-- macOS with an audio interface that exposes the required input and output
-  channels
+- macOS, Windows, or Linux with an audio interface that exposes the required
+  input and output channels
 - Node.js LTS and npm
 - A physical audio loopback or hardware path from the interface output through
   the equipment under test and back into the interface input
-- macOS microphone permission for the terminal or application used to run Node
+- Operating-system permission for the terminal or application used to run Node
 
 ## Install
 
@@ -26,13 +34,18 @@ npm install
 ```
 
 `naudiodon2` includes the PortAudio dependency used by this project. If npm
-cannot build the native module, install Apple's command-line developer tools
-and try again:
+cannot build the native module on macOS, install Apple's command-line developer
+tools and try again:
 
 ```bash
 xcode-select --install
 npm install
 ```
+
+On Windows, install the **Desktop development with C++** workload from
+[Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+if `npm install` reports that `node-gyp` or a C++ compiler is missing. Then run
+`npm install` again from PowerShell.
 
 ## Run
 
@@ -50,6 +63,12 @@ To use another port:
 
 ```bash
 PORT=8080 npm start
+```
+
+In PowerShell, use:
+
+```powershell
+$env:PORT=8080; npm start
 ```
 
 Stop the server with `Ctrl-C`.
@@ -77,8 +96,11 @@ channel routing selected.
 - Avoid monitoring the output directly into the input unless that is the
   intended test path.
 - Use conservative levels when connecting unfamiliar hardware.
-- If no devices appear, check macOS **System Settings > Privacy & Security >
-  Microphone** and allow the terminal or Node application to access audio.
+- If no devices appear, check the operating system's privacy/security settings
+  and allow the terminal or Node application to access audio. On macOS, this is
+  **System Settings > Privacy & Security > Microphone**. On Windows, check
+  **Settings > Privacy & security > Microphone** and verify that the interface
+  driver is installed.
 
 ## Project structure
 
